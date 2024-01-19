@@ -1,12 +1,22 @@
-import ProfileCard from './Components/ProfileCard';
-import './App.css';
+import Game from "./Game"
+import { Container, styled } from '@mui/material'
+
+const RootStyle = styled("div")({
+  display:"flex",
+  minHeight:"80%",
+  overflow:"hidden"
+})
+
 
 function App() {
-	return (
-		<>
-			<ProfileCard></ProfileCard>
-		</>
-	);
+
+  return (
+    <RootStyle>
+    <Container>
+      <Game/>
+    </Container>
+    </RootStyle>
+  )
 }
 
-export default App;
+export default App
