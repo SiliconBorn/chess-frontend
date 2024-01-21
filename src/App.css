@@ -13,6 +13,10 @@
 		sans-serif;
 }
 
+.app {
+	display: flex;
+}
+
 .profile-card {
 	margin: 0 auto;
 	max-width: 35rem;
@@ -82,4 +86,30 @@
 .user-stat > h2 {
 	font-size: 1.2rem;
 	font-weight: 400;
+}
+
+.chat-form {
+	padding: 5rem;
+	font-size: 1.5rem;
+}
+
+.chat-box {
+	display: flex;
+}
+
+.chat-input {
+	padding: 1rem;
+	border: 2px solid black;
+	border-radius: 0.5rem;
+	font-size: 1.5rem;
+}
+
+.chat-button {
+	padding: 1rem;
+	border: 2px solid grey;
+	border-radius: 0.5rem;
+	background-color: black;
+	color: white;
+	margin-left: 1rem;
+	font-size: 1.5rem;
 }
