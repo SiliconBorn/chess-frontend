@@ -1,22 +1,17 @@
-import Game from "./Game"
-import { Container, styled } from '@mui/material'
-
-const RootStyle = styled("div")({
-  display:"flex",
-  minHeight:"80%",
-  overflow:"hidden"
-})
-
+// import Chat from './Components/Chat';
+// import Game from './Game';
+import Landing from './Components/Landing';
+// import './AppVanilla.css';
+import './App.css';
 
 function App() {
-
-  return (
-    <RootStyle>
-    <Container>
-      <Game/>
-    </Container>
-    </RootStyle>
-  )
+	return (
+		<div className="app min-h-full">
+			{/* <Game />
+			<Chat /> */}
+			<Landing />
+		</div>
+	);
 }
 
-export default App
+export default App;
