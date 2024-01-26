@@ -1,7 +1,7 @@
 import { Chess, Color, Move, Square } from 'chess.js';
 import { useCallback, useMemo, useState } from 'react';
 import { Chessboard } from 'react-chessboard';
-import CustomDialog from './Components/CustomDialog';
+import CustomDialog from './CustomDialog';
 
 interface MoveData {
 	from: Square;
