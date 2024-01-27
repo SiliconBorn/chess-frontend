@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { LoginSignupFormProps } from "./types";
 
-const Signup = ({ onSetForm }: LoginSignupFormProps) => {
+const Signup = () => {
   const navigate = useNavigate();
 
   return (

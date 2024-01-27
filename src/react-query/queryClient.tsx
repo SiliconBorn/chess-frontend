@@ -4,14 +4,7 @@ const createQueryClient = () => {
   let queryClient: null | QueryClient = null;
 
   if (!queryClient) {
-    queryClient = new QueryClient({
-      defaultOptions: {
-        queries: {
-          retry: 0,
-          refetchOnWindowFocus: false,
-        },
-      },
-    });
+    queryClient = new QueryClient();
   }
 
   return queryClient;
