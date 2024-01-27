@@ -25,7 +25,7 @@ const Login = () => {
             TokenManager.set(token);
             // LOGIC to navigate and store the token
             setAuthToken(token);
-            navigate("/Game");
+            navigate("/user/Game");
            }else{
             console.error("ERROR WHILE LOGIN. PLEASE TRY AGAIN");
            }
