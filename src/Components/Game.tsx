@@ -64,7 +64,7 @@ const Game = () => {
 
 	return (
 		<>
-			<Chessboard boardWidth={610} position={fen} onPieceDrop={onDrop} />
+			<Chessboard position={fen} onPieceDrop={onDrop} />
 
 			<CustomDialog
 				open={Boolean(over)}
