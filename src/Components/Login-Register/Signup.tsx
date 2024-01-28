@@ -1,7 +1,50 @@
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import authService, { RegisterResponse } from "../../services/authService";
+import { useMutation } from "@tanstack/react-query";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [username,setUsername] = useState<string>("");
+  const [password,setPassword] = useState<string>("");
+  const [confirmPassword,setConfirmPassword] = useState<string>("")
+
+  const { mutate,reset} = useMutation({mutationFn:authService.register});
+
+
+  const onRegisterSuccess = useCallback((responseData:RegisterResponse)=>{
+    
+      const {success,message} = responseData;
+           if(success){
+           console.log(message);
+            navigate("/login");
+           }else{
+            console.error("ERROR WHILE REGISTERING. PLEASE TRY AGAIN");
+           }
+  },[])
+
+  const onRegisterError = (error)=>{
+    console.error(`ERROR WHILE REGISTERING. PLEASE TRY AGAIN, ${error}`);
+
+}
+
+const handleRegister = useCallback((username:string,password:string)=>{
+  console.log("username",username)
+  console.log("password",password)
+
+  mutate(
+   {
+     username,
+     password:window.btoa(password),
+   },
+   {
+     onSuccess: onRegisterSuccess,
+     onError: onRegisterError,
+     onSettled:()=>reset()
+   }
+  )
+// return username;
+},[])
 
   return (
     <>
@@ -23,6 +66,8 @@ const Signup = () => {
       <input
         type="email"
         placeholder="Email"
+        value={username}
+		onChange={(e)=>setUsername(e.target.value)}
         className="mb-4 py-2 bg-slate-950 border-b-2 border-b-gray-200 text-gray-50 outline-none
         hover:border-b-gray-50 transition-colors
         "
@@ -30,17 +75,21 @@ const Signup = () => {
       <input
         type="password"
         placeholder="Password"
+        value={password}
+		onChange={(e)=>setPassword(e.target.value)}
         className="mb-4 py-2 bg-slate-950 border-b-2 border-b-gray-200 text-gray-50 outline-none
         hover:border-b-gray-50 transition-colors"
       />
       <input
         type="password"
         placeholder="Confirm Password"
+        value={confirmPassword}
+		onChange={(e)=>setConfirmPassword(e.target.value)}
         className="mb-4 py-2 bg-slate-950 border-b-2 border-b-gray-200 text-gray-50 outline-none
         hover:border-b-gray-50 transition-colors"
       />
 
-      <button className="blocktext-slate-900 p-2 mt-8 text-md rounded-sm cursor-pointer bg-slate-100 hover:bg-white transition-colors">
+      <button className="blocktext-slate-900 p-2 mt-8 text-md rounded-sm cursor-pointer bg-slate-100 hover:bg-white transition-colors" onClick={()=>handleRegister(username,password)}>
         Sign Up
       </button>
 

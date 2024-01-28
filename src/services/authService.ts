@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { loginUrl, registerUrl } from "../react-query/endpoints";
 
-export interface AuthCred{
+export type AuthCred = {
   username: string;
   password: string;
-}
+};
 
 export type AuthSuccessResponse = {
   message: string;
@@ -14,25 +13,36 @@ export type AuthSuccessResponse = {
 };
 export type AuthErrResponse = Omit<AuthSuccessResponse, "token">;
 
-  async function login({username, password }: AuthCred):Promise<AuthSuccessResponse> {
+export type RegisterResponse = Omit<AuthSuccessResponse, "token">;
+
+const login = async ({
+  username,
+  password,
+}: AuthCred): Promise<AuthSuccessResponse> => {
   try {
-    const response = await axios.post<AuthSuccessResponse>(loginUrl, {username,password});
+    const response = await axios.post<AuthSuccessResponse>(loginUrl, {
+      username,
+      password,
+    });
     return response.data;
   } catch (error) {
-    console.log(error)
-    throw error
+    console.log(error);
+    throw error;
   }
-}
-
- const register = async (
-  registerCred: AuthCred
-): Promise<AxiosResponse> => {
-  return await axios.post(registerUrl, registerCred);
 };
 
+const register = async (registerCred: AuthCred): Promise<RegisterResponse> => {
+  try {
+    const response = await axios.post(registerUrl, registerCred);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 const authService = {
   login,
-  register
+  register,
 };
 export default authService;

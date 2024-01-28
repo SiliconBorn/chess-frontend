@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
-import { UseMutationOptions, UseMutationResult, useMutation } from "@tanstack/react-query";
-import authService, { AuthCred, AuthSuccessResponse } from "../../services/authService";
-import { AxiosResponse } from "axios";
+import { useMutation } from "@tanstack/react-query";
+import authService, { AuthSuccessResponse } from "../../services/authService";
 import TokenManager from "../../utils/TokenManager";
 import { useRecoilState } from "recoil";
 import { authState } from "../../recoil/atoms/Auth";
@@ -11,9 +10,9 @@ import { authState } from "../../recoil/atoms/Auth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [ authToken,setAuthToken] = useRecoilState(authState);
-  const [username,setUsername] = useState("");
-  const [password,setPassword] = useState("");
+  const [ authToken,setAuthToken] = useRecoilState<string>(authState);
+  const [username,setUsername] = useState<string>("");
+  const [password,setPassword] = useState<string>("");
 
   
   const { mutate,reset} = useMutation({mutationFn:authService.login});
@@ -32,7 +31,7 @@ const Login = () => {
   },[])
 
   const onLoginError=(error)=>{
-          console.error("ERROR WHILE LOGIN. PLEASE TRY AGAIN");
+          console.error(`ERROR WHILE LOGIN. PLEASE TRY AGAIN, ${error}`);
       
   }
 
