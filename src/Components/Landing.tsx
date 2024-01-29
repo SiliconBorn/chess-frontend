@@ -4,7 +4,7 @@ export default function Landing() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="bg-gradient-to-b from-slate-950 to-slate-800  min-h-screen  p-4 sm:p-6 sm:px-8 ">
+		<div className="	bg-gradient-to-b from-slate-950 to-slate-800  h-screen overflow-clip p-4 sm:p-6 sm:px-8 ">
 			<div className="relative pt-2 sm:pt-4 flex justify-items-start items-baseline font-bold tracking-tight text-lg leading-6">
 				<img src="./chess.png" width={40} />
 				<span className="text-slate-50 text-3xl pl-2">che</span>
@@ -39,6 +39,16 @@ export default function Landing() {
 						Register
 					</button>
 				</div>
+				{/* <img
+					src="./chess_front_blue.jpg"
+					width={800}
+					className="mt-10 rounded-lg mix-blend-overlay"
+				></img> */}
+				<img
+					src="./chessboard.png"
+					width={900}
+					className=" mt-10 rounded-lg"
+				/>
 			</div>
 		</div>
 	);
