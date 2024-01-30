@@ -11,16 +11,16 @@ export default function Landing() {
 				<span className="text-sky-500 text-3xl">ss</span>
 			</div>
 			<div className="relative max-w-5xl mx-auto pt-16 sm:pt-24 lg:pt-32 flex flex-col items-center ">
-				<h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center dark:text-white mt-10">
+				<h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center text-white mt-10">
 					Play Chess online with your buddies.
 				</h1>
-				<p className="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
+				<p className="mt-6 text-lg text-slate-600 text-center max-w-3xl mx-auto text-slate-400">
 					Build with the power of{' '}
-					<code className="font-mono font-medium text-sky-500 dark:text-sky-400">
+					<code className="font-mono font-medium text-sky-500 text-sky-400">
 						React
 					</code>{' '}
 					and{' '}
-					<code className="font-mono font-medium text-sky-500 dark:text-sky-400">
+					<code className="font-mono font-medium text-sky-500 text-sky-400">
 						Scoket.io
 					</code>
 				</p>
