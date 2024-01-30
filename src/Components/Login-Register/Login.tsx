@@ -64,7 +64,7 @@ const Login = () => {
 					return;
 				}}
 			>
-				<h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center dark:text-white mb-16">
+				<h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center text-white mb-10 md:mb-16">
 					Log
 					<span className="text-sky-500">i</span>n
 				</h1>
@@ -93,14 +93,14 @@ const Login = () => {
 					Login
 				</button>
 
-				<p className="mt-6 text-sm text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
+				<p className="mt-6 text-sm  text-center max-w-3xl mx-auto text-slate-400">
 					Doesn't have an account?{' '}
 					<span
 						onClick={() => {
 							// onSetForm("signup");
 							navigate('/signup');
 						}}
-						className="block underline cursor-pointer font-mono font-medium text-sky-500 dark:text-sky-400"
+						className="block underline cursor-pointer font-mono font-medium  text-sky-400"
 					>
 						SignUp
 					</span>
