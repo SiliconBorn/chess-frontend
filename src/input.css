@@ -10,3 +10,7 @@ body {
 #root {
 	height: 100%;
 }
+
+.white-eye::-ms-reveal {
+	filter: invert(100%);
+}

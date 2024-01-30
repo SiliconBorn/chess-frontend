@@ -4,12 +4,7 @@ export default function Landing() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="	bg-gradient-to-b from-slate-950 to-slate-800  h-screen overflow-clip p-4 sm:p-6 sm:px-8 ">
-			<div className="relative pt-2 sm:pt-4 flex justify-items-start items-baseline font-bold tracking-tight text-lg leading-6">
-				<img src="./chess.png" width={40} />
-				<span className="text-slate-50 text-3xl pl-2">che</span>
-				<span className="text-sky-500 text-3xl">ss</span>
-			</div>
+		<>
 			<div className="relative max-w-5xl mx-auto pt-16 sm:pt-24 lg:pt-32 flex flex-col items-center ">
 				<h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center text-white mt-10">
 					Play Chess online with your buddies.
@@ -39,17 +34,12 @@ export default function Landing() {
 						Register
 					</button>
 				</div>
-				{/* <img
-					src="./chess_front_blue.jpg"
-					width={800}
-					className="mt-10 rounded-lg mix-blend-overlay"
-				></img> */}
 				<img
-					src="./chessboard.png"
-					width={900}
+					src="./two_player_icon.png"
+					width={300}
 					className=" mt-10 rounded-lg"
 				/>
 			</div>
-		</div>
+		</>
 	);
 }

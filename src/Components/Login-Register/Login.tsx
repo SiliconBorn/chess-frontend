@@ -6,6 +6,7 @@ import authService, { AuthSuccessResponse } from '../../services/authService';
 import TokenManager from '../../utils/TokenManager';
 import { useRecoilState } from 'recoil';
 import { authState } from '../../recoil/atoms/Auth';
+import Form from '../Form';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -15,17 +16,20 @@ const Login = () => {
 
 	const { mutate, reset } = useMutation({ mutationFn: authService.login });
 
-	const onLoginSuccess = useCallback((responseData: AuthSuccessResponse) => {
-		const { token } = responseData;
-		if (token) {
-			TokenManager.set(token);
-			// LOGIC to navigate and store the token
-			setAuthToken(token);
-			navigate('/user/Game');
-		} else {
-			console.error('ERROR WHILE LOGIN. PLEASE TRY AGAIN');
-		}
-	}, []);
+	const onLoginSuccess = useCallback(
+		(responseData: AuthSuccessResponse) => {
+			const { token } = responseData;
+			if (token) {
+				TokenManager.set(token);
+				// LOGIC to navigate and store the token
+				setAuthToken(token);
+				navigate('/user/Game');
+			} else {
+				console.error('ERROR WHILE LOGIN. PLEASE TRY AGAIN');
+			}
+		},
+		[navigate, setAuthToken]
+	);
 
 	const onLoginError = (error: any) => {
 		console.error(`ERROR WHILE LOGIN. PLEASE TRY AGAIN, ${error}`);
@@ -50,17 +54,9 @@ const Login = () => {
 	}, []);
 
 	return (
-		<div className=" overflow-auto font-sans bg-slate-950 min-h-screen  p-15">
-			<div className="pt-14 px-10 mx-auto block text-center">
-				<h1 className=" text-gray-50 text-6xl font-bold uppercase my-5 drop-shadow-lg">
-					Chess
-				</h1>
-				<p className=" text-gray-50 text-lg">
-					Play with your friends online 🐴
-				</p>
-			</div>
+		<Form>
 			<form
-				className=" flex flex-col m-10 px-5 py-12 rounded-xl max-w-72 mx-auto"
+				className=" flex flex-col"
 				onSubmit={(e) => {
 					if (e) {
 						e.preventDefault();
@@ -68,12 +64,16 @@ const Login = () => {
 					return;
 				}}
 			>
+				<h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center dark:text-white mb-16">
+					Log
+					<span className="text-sky-500">i</span>n
+				</h1>
 				<input
 					type="username"
-					placeholder="username"
+					placeholder="Username"
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
-					className="mb-4 py-2 bg-slate-950 border-b-2 border-b-gray-200 text-gray-50 outline-none
+					className="px-2 mb-4 py-2 bg-transparent border-b-2 border-b-gray-200 text-gray-50 outline-none
 					hover:border-b-gray-50 transition-colors
 					"
 				/>
@@ -82,31 +82,31 @@ const Login = () => {
 					placeholder="Password"
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
-					className="mb-4 py-2 bg-slate-950 border-b-2 border-b-gray-200 text-gray-50 outline-none
-					hover:border-b-gray-50 transition-colors"
+					className="px-2 mb-4 py-2 bg-transparent border-b-2 border-b-gray-200 text-gray-50 outline-none
+					hover:border-b-gray-50 transition-colors white-eye"
 				/>
 
 				<button
-					className="blocktext-slate-900 p-2 mt-8 text-md rounded-sm cursor-pointer bg-slate-100 hover:bg-white transition-colors"
+					className="mt-12 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400 font-bold focus:ring-offset-2 focus:ring-offset-slate-50 text-white h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto bg-sky-500 highlight-white/20 hover:bg-sky-400"
 					onClick={() => handleLogin(username, password)}
 				>
 					Login
 				</button>
 
-				<p className="my-2 mx-auto text-gray-200 text-sm">
+				<p className="mt-6 text-sm text-slate-600 text-center max-w-3xl mx-auto dark:text-slate-400">
 					Doesn't have an account?{' '}
 					<span
 						onClick={() => {
 							// onSetForm("signup");
 							navigate('/signup');
 						}}
-						className="underline cursor-pointer hover:text-gray-50"
+						className="block underline cursor-pointer font-mono font-medium text-sky-500 dark:text-sky-400"
 					>
-						Sign up
+						SignUp
 					</span>
 				</p>
 			</form>
-		</div>
+		</Form>
 	);
 };
 
