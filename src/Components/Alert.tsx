@@ -4,15 +4,8 @@ const alertTypeClasses: Record<string, string> = {
 	secondary: 'bg-slate-800 hover:bg-slate-700 ',
 };
 
-// const iconTypeSrc: Record<string, string> = {
-// 	error: './black_cross.png',
-// 	success: './tick.png',
-// 	warning: './exclamation.png',
-// };
-
 export default function Alert() {
 	const type: string = 'error';
-	// const icon: string = 'error';
 	const msg: string = 'Login failed';
 
 	return (

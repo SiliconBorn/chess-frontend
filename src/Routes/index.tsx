@@ -3,6 +3,7 @@ import Login from '../Components/Login-Register/Login';
 import Signup from '../Components/Login-Register/Signup';
 import Game from '../Components/Game';
 import Landing from '../Components/Landing';
+import JoinRoom from '../Components/JoinRoom';
 
 const Router = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 	return useRoutes([
@@ -14,11 +15,12 @@ const Router = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 				{ path: 'landing', element: <Landing /> },
 				{ path: 'login', element: <Login /> },
 				{ path: 'signup', element: <Signup /> },
+				{ path: 'join', element: <JoinRoom /> },
 			],
 		},
 		{
 			path: '/user',
-			element: isLoggedIn ? <Game /> : <Navigate to="/login" />,
+			element: isLoggedIn ? <JoinRoom /> : <Navigate to="/login" />,
 
 			children: [
 				{ path: '', element: <Navigate to="/Game" /> },
