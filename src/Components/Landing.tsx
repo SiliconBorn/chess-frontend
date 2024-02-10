@@ -35,7 +35,7 @@ export default function Landing() {
 					</button>
 				</div>
 				<img
-					src="./two_player_icon.png"
+					src="/two_player_icon.png"
 					width={300}
 					className="max-w-56 mt-10 rounded-lg"
 				/>

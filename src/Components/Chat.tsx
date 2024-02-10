@@ -1,13 +1,52 @@
 import { Socket } from 'socket.io-client';
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import EmojiPickerComponent from './EmojiPickerComponent';
 
 const useSocket = () => {
-	const [receivedMessages, setReceivedMessages] = useState<string[]>([
-		'hi there',
-		'Hello',
-		'This is the first message',
-		'This is another message from second user',
+	const [receivedMessages, setReceivedMessages] = useState<
+		{ msg: string; id: number; msg_id: number }[]
+	>([
+		{
+			msg: 'hi asdf;aksdf sdf\n asdf;ljka\nsd;fjkas;djf\nasdfl;ljasdl;flaslddf',
+			id: 1,
+			msg_id: 1256184834,
+		},
+		{
+			msg: 'hi asdf;aksdf sdf\n asdf;jasdl;flaslddf',
+			id: 1,
+			msg_id: 12354375374,
+		},
+		{
+			msg: 'hi asdf;aksdf sdf\n asdfflaslddf',
+			id: 1,
+			msg_id: 175637453234,
+		},
+		{
+			msg: 'hi asdf;aksdf sdf\n asdfflaslddf',
+			id: 1,
+			msg_id: 17563745353234,
+		},
+		{
+			msg: 'hi asdf;aksdf sdf\n asdfflaslddf',
+			id: 1,
+			msg_id: 17565364353234,
+		},
+		{
+			msg: 'hello',
+			id: 2,
+			msg_id: 1254245234,
+		},
+		{
+			msg: 'hurray',
+			id: 1,
+			msg_id: 123424524524,
+		},
+		{
+			msg: 'hello',
+			id: 2,
+			msg_id: 125452245234,
+		},
 	]);
 	const [messageInput, setMessageInput] = useState<string>('');
 	const [socket, setSocket] = useState<Socket | null>(null);
@@ -24,6 +63,7 @@ const useSocket = () => {
 			// Clear the input field
 			setMessageInput('');
 		}
+		553;
 	};
 
 	useEffect(() => {
@@ -56,6 +96,26 @@ const useSocket = () => {
 };
 
 const Chat = () => {
+	const [isOpen, setIsOpen] = useState(false);
+
+	return (
+		<>
+			<div>
+				{isOpen && <ChatBox />}
+				<img
+					src="/chat.png"
+					alt="chat button"
+					className="absolute cursor-pointer bottom-10 right-10"
+					onClick={() => setIsOpen((prev) => !prev)}
+				/>
+			</div>
+		</>
+	);
+};
+
+export default Chat;
+
+function ChatBox() {
 	const {
 		socket,
 		receivedMessages,
@@ -64,37 +124,94 @@ const Chat = () => {
 		handleSubmit,
 	} = useSocket();
 
+	const lastMessageRef = useRef(null);
+	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+	const handleEmojiSelect = (emoji: { native: string }) => {
+		setMessageInput((prevInputValue) => prevInputValue + emoji.native);
+		setShowEmojiPicker(false);
+	};
+
+	useEffect(() => {
+		// Scroll to the last message when messages change
+		if (lastMessageRef.current) {
+			(lastMessageRef.current as HTMLElement | null)?.scrollIntoView({
+				behavior: 'smooth',
+			});
+		}
+	}, [receivedMessages]);
+
 	return (
 		<>
+			{showEmojiPicker && (
+				<div className="absolute bottom-40 right-6 z-30">
+					<EmojiPickerComponent onSelect={handleEmojiSelect} />
+				</div>
+			)}
 			<form
 				id="form"
 				action=""
-				className="mt-10 min-h-full text-slate-50 mx-auto max-w-fit text-center"
+				className=" bg-slate-900 rounded-lg h-96 text-sm absolute bottom-28 right-10 z-20 w-80 overflow-clip transition-all shadow"
 				onSubmit={(e) => handleSubmit(e, socket)}
 			>
+				<h1 className="text-slate-200 bg-slate-900 pl-8 py-4 font-semibold shadow-md border border-slate-800">
+					Player Name
+				</h1>
 				<div id="messages">
-					<p className="text-2xl font-semibold shadow-md ">CHAT</p>
-					<ul className="m-4 text-left">
+					<ul className="p-4 overflow-y-scroll scroll-smooth h-72 scroll-p-0 scroll-m-0 no-scrollbar">
 						{receivedMessages.map((msg, index) => (
-							<li key={index}>{msg}</li>
+							<div
+								key={msg.msg_id}
+								ref={
+									index === receivedMessages.length - 1
+										? lastMessageRef
+										: null
+								}
+								className={`flex ${
+									msg.id === 2 ? 'justify-end' : ''
+								}`}
+							>
+								<ChatMsg msg={msg.msg} id={msg.id} />
+							</div>
 						))}
 					</ul>
 				</div>
-				<div className="flex justify-around mx-4">
+
+				<div className="border absolute bottom-0 w-full flex items-center  px-2 justify-between rounded-lg bg-slate-900 border-slate-800">
+					<div className=" cursor-pointer w-6">
+						<img
+							src="/happy.png"
+							alt="emoji button"
+							onClick={() => setShowEmojiPicker((prev) => !prev)}
+						/>
+					</div>
+
 					<input
 						id="input"
 						autoComplete="off"
-						className="px-2 py-1 text-slate-200 outline-none bg-slate-950 border border-slate-200 rounded-md"
+						className="p-2 text-slate-100 outline-none rounded-lg bg-transparent w-4/5 "
 						value={messageInput}
 						onChange={(e) => setMessageInput(e.target.value)}
 					/>
-					<button className="px-2 py-1 border text-md rounded-md cursor-pointer transition-colors text-gray-950 bg-slate-200 max-w-32">
-						Send
-					</button>
+					<div className=" cursor-pointer w-6">
+						<img src="/send.png" alt="emoji button" />
+					</div>
 				</div>
 			</form>
 		</>
 	);
-};
+}
 
-export default Chat;
+function ChatMsg({ msg, id }: { msg: string; id: number }) {
+	return (
+		<div className={`my-1 max-w-56  `}>
+			<div
+				className={`text-white ${
+					id === 1 ? 'bg-sky-600' : 'bg-slate-600'
+				} px-4 py-2 rounded-2xl inline-block`}
+			>
+				{msg} {id}
+			</div>
+		</div>
+	);
+}

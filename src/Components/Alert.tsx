@@ -15,7 +15,7 @@ export default function Alert() {
 			{msg}
 
 			<img
-				src="./cross.png"
+				src="/cross.png"
 				className="absolute right-4 rounded-full  scale-100 hover:scale-110"
 				width={15}
 			/>

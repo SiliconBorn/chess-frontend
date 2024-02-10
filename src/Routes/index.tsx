@@ -4,30 +4,43 @@ import Signup from '../Components/Login-Register/Signup';
 import Game from '../Components/Game';
 import Landing from '../Components/Landing';
 import JoinRoom from '../Components/JoinRoom';
+import Main from '../Components/Main';
+import PageNotFound from '../Components/PageNotFound';
 
 const Router = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 	return useRoutes([
 		{
 			path: '/',
-			element: <Outlet />,
+			element: (
+				<Main>
+					<Outlet />
+				</Main>
+			),
 			children: [
-				{ path: '', element: <Navigate to="/landing" replace /> },
-				{ path: 'landing', element: <Landing /> },
+				{ path: '', element: <Landing /> },
 				{ path: 'login', element: <Login /> },
 				{ path: 'signup', element: <Signup /> },
-				{ path: 'join', element: <JoinRoom /> },
-			],
-		},
-		{
-			path: '/user',
-			element: isLoggedIn ? <JoinRoom /> : <Navigate to="/login" />,
-
-			children: [
-				{ path: '', element: <Navigate to="/Game" /> },
 				{
-					path: 'Game',
-					element: <Outlet />,
-					children: [{ path: '', element: <Game /> }],
+					path: 'user',
+					element: isLoggedIn ? <Outlet /> : <Navigate to="/login" />,
+					children: [
+						{
+							path: 'room',
+							element: <JoinRoom />,
+						},
+						{
+							path: 'Game',
+							element: <Game />,
+						},
+					],
+				},
+				// below are testing routes, without auth
+				{ path: 'room', element: <JoinRoom /> },
+				{ path: 'game', element: <Game /> },
+
+				{
+					path: '*',
+					element: <PageNotFound />,
 				},
 			],
 		},
