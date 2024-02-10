@@ -5,8 +5,8 @@ export default function ProfileCard() {
 	return (
 		<div className="text-white font-bold">
 			{isOpen ? (
-				<div className="backdrop-blur-lg h-full w-full fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center transition-opacity">
-					<div className="bg-slate-950 mx-auto rounded-lg relative   py-12 px-8 sm:py-14 sm:px-24 shadow-sm shadow-sky-950  ">
+				<div className="backdrop-blur-xl h-full w-full fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center transition-opacity ">
+					<div className="bg-slate-900 mx-auto rounded-lg relative   py-12 px-8 sm:py-14 sm:px-24 shadow-sm">
 						<img
 							src="/cross.png"
 							alt="close button"

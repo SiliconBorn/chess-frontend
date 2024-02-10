@@ -1,11 +1,14 @@
+import { useRecoilValue } from 'recoil';
 import ProfileCard from './ProfileCard';
 import { useNavigate } from 'react-router-dom';
+import { alertState } from '../recoil/atoms/Alert';
+import Alert from './Alert';
 
 export default function Main({ children }: { children: React.ReactNode }) {
 	const navigate = useNavigate();
+	const alert = useRecoilValue(alertState);
 	return (
 		<div className="relative bg-gradient-to-b from-slate-950 to-slate-800 min-h-full pt-4 sm:pt-6 px-6 md:px-8 scroll-auto ">
-			{/* {navbar} */}
 			<div className="flex justify-between items-center">
 				<div
 					onClick={() => navigate('/')}
@@ -16,6 +19,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
 					<span className="text-sky-500 text-3xl">ss</span>
 				</div>
 				<ProfileCard />
+				{alert.show && <Alert />}
 			</div>
 			{children}
 		</div>

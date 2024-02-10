@@ -3,7 +3,7 @@ import Login from '../Components/Login-Register/Login';
 import Signup from '../Components/Login-Register/Signup';
 import Game from '../Components/Game';
 import Landing from '../Components/Landing';
-import JoinRoom from '../Components/JoinRoom';
+import JoinRoom from '../Components/Room';
 import Main from '../Components/Main';
 import PageNotFound from '../Components/PageNotFound';
 

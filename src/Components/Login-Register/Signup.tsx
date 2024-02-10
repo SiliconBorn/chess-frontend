@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import authService, { RegisterResponse } from '../../services/authService';
 import { useMutation } from '@tanstack/react-query';
 import Form from '../Form';
+import useShowAlert from '../../utils/useShowAlert';
+import axios from 'axios';
 
 const Signup = () => {
 	const navigate = useNavigate();
@@ -11,38 +13,61 @@ const Signup = () => {
 	const [confirmPassword, setConfirmPassword] = useState<string>('');
 
 	const { mutate, reset } = useMutation({ mutationFn: authService.register });
+	const showAlert = useShowAlert();
 
-	const onRegisterSuccess = useCallback((responseData: RegisterResponse) => {
-		const { success, message } = responseData;
-		if (success) {
-			console.log(message);
-			navigate('/login');
-		} else {
-			console.error('ERROR WHILE REGISTERING. PLEASE TRY AGAIN');
-		}
-	}, []);
-
-	const onRegisterError = (error: unknown) => {
-		console.error(`ERROR WHILE REGISTERING. PLEASE TRY AGAIN, ${error}`);
-	};
-
-	const handleRegister = useCallback((username: string, password: string) => {
-		console.log('username', username);
-		console.log('password', password);
-
-		mutate(
-			{
-				username,
-				password: window.btoa(password),
-			},
-			{
-				onSuccess: onRegisterSuccess,
-				onError: onRegisterError,
-				onSettled: () => reset(),
+	const onRegisterSuccess = useCallback(
+		(responseData: RegisterResponse) => {
+			const { success, message } = responseData;
+			if (success) {
+				console.log(message);
+				showAlert({
+					show: true,
+					type: 'primary',
+					msg: message,
+				});
+				navigate('/login');
+			} else {
+				console.error('ERROR WHILE REGISTERING. PLEASE TRY AGAIN');
 			}
-		);
-		// return username;
-	}, []);
+		},
+		[navigate, showAlert]
+	);
+
+	const onRegisterError = useCallback(
+		(error: unknown) => {
+			console.error(`Error while signing up. Please try again, ${error}`);
+			const msg = axios.isAxiosError(error)
+				? error.response?.data.message
+				: 'Something went wrong, Please try later';
+			showAlert({
+				show: true,
+				type: 'error',
+				msg,
+			});
+		},
+		[showAlert]
+	);
+
+	const handleRegister = useCallback(
+		(username: string, password: string) => {
+			console.log('username', username);
+			console.log('password', password);
+
+			mutate(
+				{
+					username,
+					password: window.btoa(password),
+				},
+				{
+					onSuccess: onRegisterSuccess,
+					onError: onRegisterError,
+					onSettled: () => reset(),
+				}
+			);
+			// return username;
+		},
+		[mutate, onRegisterError, onRegisterSuccess, reset]
+	);
 
 	return (
 		<>

@@ -11,8 +11,8 @@ export type AuthSuccessResponse = {
 	success: boolean;
 	token: string;
 };
-export type AuthErrResponse = Omit<AuthSuccessResponse, 'token'>;
 
+export type AuthErrResponse = Omit<AuthSuccessResponse, 'token'>;
 export type RegisterResponse = Omit<AuthSuccessResponse, 'token'>;
 
 const login = async ({
@@ -25,8 +25,10 @@ const login = async ({
 			password,
 		});
 		return response.data;
-	} catch (error) {
-		console.log(error);
+	} catch (error: unknown) {
+		if (axios.isAxiosError(error)) {
+			console.log(error.response?.data);
+		}
 		throw error;
 	}
 };
@@ -36,7 +38,9 @@ const register = async (registerCred: AuthCred): Promise<RegisterResponse> => {
 		const response = await axios.post(registerUrl, registerCred);
 		return response.data;
 	} catch (error) {
-		console.log(error);
+		if (axios.isAxiosError(error)) {
+			console.log(error.response?.data);
+		}
 		throw error;
 	}
 };

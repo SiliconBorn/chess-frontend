@@ -1,3 +1,6 @@
+import { useRecoilState } from 'recoil';
+import { alertState } from '../recoil/atoms/Alert';
+
 const alertTypeClasses: Record<string, string> = {
 	error: 'bg-pink-700 hover:bg-pink-600 ',
 	primary: 'bg-sky-700 hover:bg-sky-600 ',
@@ -5,8 +8,7 @@ const alertTypeClasses: Record<string, string> = {
 };
 
 export default function Alert() {
-	const type: string = 'error';
-	const msg: string = 'Login failed';
+	const [{ type, msg }, setAlert] = useRecoilState(alertState);
 
 	return (
 		<div
@@ -18,6 +20,7 @@ export default function Alert() {
 				src="/cross.png"
 				className="absolute right-4 rounded-full  scale-100 hover:scale-110"
 				width={15}
+				onClick={() => setAlert({ show: false, type: '', msg: '' })}
 			/>
 		</div>
 	);

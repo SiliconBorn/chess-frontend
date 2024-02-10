@@ -7,12 +7,15 @@ import TokenManager from '../../utils/TokenManager';
 import { useRecoilState } from 'recoil';
 import { authState } from '../../recoil/atoms/Auth';
 import Form from '../Form';
+import useShowAlert from '../../utils/useShowAlert';
+import axios from 'axios';
 
 const Login = () => {
 	const navigate = useNavigate();
 	const [, setAuthToken] = useRecoilState<string>(authState);
 	const [username, setUsername] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
+	const showAlert = useShowAlert();
 
 	const { mutate, reset } = useMutation({ mutationFn: authService.login });
 
@@ -23,35 +26,60 @@ const Login = () => {
 				TokenManager.set(token);
 				// LOGIC to navigate and store the token
 				setAuthToken(token);
-				navigate('/user/Game');
+				showAlert({
+					show: true,
+					type: 'primary',
+					msg: `Login Successful!`,
+				});
+				navigate('/user/room');
 			} else {
 				console.error('ERROR WHILE LOGIN. PLEASE TRY AGAIN');
+				showAlert({
+					show: true,
+					type: 'error',
+					msg: `Something went wrong, Please try later.`,
+				});
 			}
 		},
-		[navigate, setAuthToken]
+		[navigate, setAuthToken, showAlert]
 	);
 
-	const onLoginError = (error: any) => {
-		console.error(`ERROR WHILE LOGIN. PLEASE TRY AGAIN, ${error}`);
-	};
+	const onLoginError = useCallback(
+		(error: any) => {
+			console.error(`${error.response.data.message}. Please try again`);
+			const msg = axios.isAxiosError(error)
+				? error.response?.data.message
+				: 'Something went wrong, Please try later';
+			showAlert({
+				show: true,
+				type: 'error',
+				msg,
+			});
+		},
+		[showAlert]
+	);
 
-	const handleLogin = useCallback((username: string, password: string) => {
-		console.log('username', username);
-		console.log('password', password);
+	const handleLogin = useCallback(
+		(username: string, password: string) => {
+			console.log('username', username);
+			console.log('password', password);
 
-		mutate(
-			{
-				username,
-				password: window.btoa(password),
-			},
-			{
-				onSuccess: onLoginSuccess,
-				onError: onLoginError,
-				onSettled: () => reset(),
-			}
-		);
-		// return username;
-	}, []);
+			mutate(
+				{
+					username,
+					password: window.btoa(password),
+				},
+				{
+					onSuccess: onLoginSuccess,
+					onError: (error) => {
+						onLoginError(error);
+					},
+					onSettled: () => reset(),
+				}
+			);
+		},
+		[mutate, onLoginError, onLoginSuccess, reset]
+	);
 
 	return (
 		<Form>

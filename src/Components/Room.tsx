@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Form from './Form';
+import { useNavigate } from 'react-router-dom';
 
 interface FormProps {
 	onSetForm: (form: string) => void;
@@ -7,7 +8,6 @@ interface FormProps {
 
 export default function JoinRoom() {
 	const [form, setForm] = useState('join');
-
 	function handleSetForm(formValue: string) {
 		if (formValue === 'join' || formValue === 'create') setForm(formValue);
 	}
@@ -18,7 +18,7 @@ export default function JoinRoom() {
 			</h1>
 			<div className=" flex flex-col items-center">
 				<img
-					src="./src/assets/Chess_Join_Room.svg"
+					src="/Chess_Join_Room.svg"
 					className="max-w-72"
 					width={150}
 				/>
@@ -32,6 +32,8 @@ export default function JoinRoom() {
 }
 
 function CreateRoomForm({ onSetForm }: FormProps) {
+	const navigate = useNavigate();
+
 	return (
 		<form action="" className="flex flex-col max-w-56 mt-8">
 			<input
@@ -40,7 +42,10 @@ function CreateRoomForm({ onSetForm }: FormProps) {
 				className="px-2 mb-4 py-2 bg-transparent border-b-2 border-b-gray-200 text-gray-50 outline-none
 				hover:border-b-gray-50 transition-colors white-eye text-center"
 			/>
-			<button className="mt-4 cursor-pointer  focus:outline-none focus:ring-2 focus:ring-slate-400 font-semibold focus:ring-offset-2 focus:ring-offset-slate-50 text-white h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto bg-sky-500 highlight-white/20 hover:bg-sky-400">
+			<button
+				onClick={() => navigate('/user/game')}
+				className="mt-4 cursor-pointer  focus:outline-none focus:ring-2 focus:ring-slate-400 font-semibold focus:ring-offset-2 focus:ring-offset-slate-50 text-white h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto bg-sky-500 highlight-white/20 hover:bg-sky-400"
+			>
 				Create a new room
 			</button>
 			<p className=" my-2 text-center max-w-3xl mx-auto   cursor-pointer font-mono font-medium  text-sky-400">
@@ -57,6 +62,8 @@ function CreateRoomForm({ onSetForm }: FormProps) {
 }
 
 function JoinRoomForm({ onSetForm }: FormProps) {
+	const navigate = useNavigate();
+
 	return (
 		<form action="" className="flex flex-col max-w-56 mt-8">
 			<input
@@ -65,7 +72,10 @@ function JoinRoomForm({ onSetForm }: FormProps) {
 				className="px-2 mb-4 py-2 bg-transparent border-b-2 border-b-gray-200 text-gray-50 outline-none
 				hover:border-b-gray-50 transition-colors white-eye text-center"
 			/>
-			<button className="mt-4 cursor-pointer  focus:outline-none focus:ring-2 focus:ring-slate-400 font-semibold focus:ring-offset-2 focus:ring-offset-slate-50 text-white h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto bg-sky-500 highlight-white/20 hover:bg-sky-400">
+			<button
+				onClick={() => navigate('/user/game')}
+				className="mt-4 cursor-pointer  focus:outline-none focus:ring-2 focus:ring-slate-400 font-semibold focus:ring-offset-2 focus:ring-offset-slate-50 text-white h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto bg-sky-500 highlight-white/20 hover:bg-sky-400"
+			>
 				Join Room
 			</button>
 			<p className=" my-2 text-center max-w-3xl mx-auto   cursor-pointer font-mono font-medium  text-sky-400">
